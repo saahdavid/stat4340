@@ -1,0 +1,14 @@
+{
+  "name": "stat4340-learning-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Dr. David Saah's hand-first introductory statistics learning platform",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node tests/core.cjs",
+    "test:browser": "node tests/browser.mjs",
+    "test:scipy": "python3 tests/crosscheck.py",
+    "start": "python3 -m http.server 4340 --bind 127.0.0.1"
+  },
+  "devDependencies": {"playwright": "^1.58.0"}
+}
