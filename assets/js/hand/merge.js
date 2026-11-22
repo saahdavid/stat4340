@@ -11,7 +11,8 @@
 
   // course skill id → multi-step generator id(s)
   const MAP = {
-    1: { 'm1-identify': ['m1-popsamp', 'm1-vartype'], 'm1-sampling': ['m1-sampmethod'], 'm1-center': ['m1-center'], 'm1-sd': ['m1-sd', 'm1-shortcut'], 'm1-quartiles': ['m1-fivenum'], 'm1-fences': ['m1-outliers'], 'm1-displays': ['m1-boxshape'], 'm1-choose': ['m1-shape'] }
+    1: { 'm1-identify': ['m1-popsamp', 'm1-vartype'], 'm1-sampling': ['m1-sampmethod'], 'm1-center': ['m1-center'], 'm1-sd': ['m1-sd', 'm1-shortcut'], 'm1-quartiles': ['m1-fivenum'], 'm1-fences': ['m1-outliers'], 'm1-displays': ['m1-boxshape'], 'm1-choose': ['m1-shape'] },
+    2: { 'm2-sets': ['m2-setops'], 'm2-union': ['m2-addition', 'm2-incl3'], 'm2-equally': ['m2-equally'], 'm2-conditional': ['m2-cond'], 'm2-independent': ['m2-indep'], 'm2-multiply': ['m2-mult'], 'm2-total': ['m2-totalp'], 'm2-bayes': ['m2-bayesrule'] }
   };
 
   // \( … \) and \[ … \] → the .math spans that Course.renderMath typesets

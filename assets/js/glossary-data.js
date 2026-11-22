@@ -31,6 +31,23 @@ root.GLOSSARY=[
 ['Interquartile range (IQR)',1,'variability','IQR = Q₃ − Q₁, the range of the middle 50% of the data. The textbook calls it the fourth spread, fₛ.'],
 ['Sample variance',1,'variability','s² = Sₓₓ/(n − 1), where Sₓₓ = Σ(xᵢ − x̄)² = Σxᵢ² − (Σxᵢ)²/n. The n − 1 reflects the degree of freedom lost by estimating x̄.'],
 ['Sample standard deviation',1,'variability','s = √s², a typical distance of the observations from the mean, in the original units. s = 0 only when all observations are equal.'],
-['Outlier',1,'outliers','A value far outside the overall pattern. Rule of thumb: below Q₁ − 1.5 × IQR or above Q₃ + 1.5 × IQR. Beyond 3 × IQR it is an extreme outlier.']
+['Outlier',1,'outliers','A value far outside the overall pattern. Rule of thumb: below Q₁ − 1.5 × IQR or above Q₃ + 1.5 × IQR. Beyond 3 × IQR it is an extreme outlier.'],
+['Experiment',2,'definitions','Any activity or process whose outcome is subject to uncertainty.'],
+['Sample space',2,'definitions','S, the collection of all possible outcomes of an experiment. For a die roll, S = {1, 2, 3, 4, 5, 6}.'],
+['Event',2,'definitions','Any subset of the sample space. A simple event has one outcome; a compound event has more than one.'],
+['Union',2,'sets','A ∪ B (“A or B”): all outcomes in A, in B, or in both.'],
+['Intersection',2,'sets','A ∩ B (“A and B”): all outcomes in both A and B.'],
+['Complement',2,'sets','A′: all outcomes in S that are not in A. P(A′) = 1 − P(A).'],
+['Mutually exclusive',2,'sets','Events with no outcomes in common: A ∩ B = ∅. Also called disjoint.'],
+['Axioms of probability',2,'axioms','P(A) ≥ 0; P(S) = 1; and for disjoint events the probability of the union is the sum of the probabilities.'],
+['Addition rule',2,'axioms','P(A ∪ B) = P(A) + P(B) − P(A ∩ B).'],
+['Inclusion–exclusion rule',2,'axioms','P(A ∪ B ∪ C) adds the three probabilities, subtracts the three pairwise intersections, and adds back P(A ∩ B ∩ C).'],
+['Equally likely outcomes',2,'equally-likely','When all N outcomes are equally likely, P(A) = N(A)/N.'],
+['Conditional probability',2,'conditional','P(A | B) = P(A ∩ B)/P(B), the probability of A once B is known to have occurred.'],
+['Multiplication rule',2,'independence','P(A ∩ B) = P(A | B)P(B).'],
+['Independent events',2,'independence','Events for which P(A | B) = P(A), equivalently P(A ∩ B) = P(A)P(B).'],
+['Partition',2,'bayes','Mutually exclusive and exhaustive events A₁, …, Aₖ: exactly one of them occurs.'],
+['Law of total probability',2,'bayes','P(B) = Σ P(B | Aᵢ)P(Aᵢ) over a partition A₁, …, Aₖ.'],
+["Bayes’ theorem",2,'bayes','P(Aⱼ | B) = P(B | Aⱼ)P(Aⱼ) / Σ P(B | Aᵢ)P(Aᵢ): it updates a prior probability to a posterior probability.']
 ];
 })(typeof window!=='undefined'?window:globalThis);
