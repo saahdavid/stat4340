@@ -37,10 +37,10 @@
    {title:`3. Survive past s + t = ${s+t}`,text:`P(X > ${s+t}) = ${F(pst,4)}, the darker part of that tail.`},
    {title:'4. Condition on X > s',text:`P(X > ${s+t} | X > ${s}) = ${F(pst,4)}/${F(ps,4)} = ${F(pst/ps,4)}.`},
    {title:`5. Compare with P(X > t)`,text:`P(X > ${t}) = e^(−${lam}·${t}) = ${F(pt,4)}: the same. Having already waited ${s} does not change the chance of waiting ${t} more.`}];},
-  draw(l){const lam=+l.params.lam,s=+l.params.s,t=+l.params.t,st=l.step,hi=Math.max(8/lam,s+t+2),f=x=>x>=0?lam*Math.exp(-lam*x):0;
+  draw(l){const lam=+l.params.lam,s=+l.params.s,t=+l.params.t,st=l.step,hi=Math.ceil(Math.max(8/lam,s+t+2)/5)*5,f=x=>x>=0?lam*Math.exp(-lam*x):0;
    const shade=st===1?[[s,hi]]:st===2||st===3?[[s,hi,'var(--blue-light)'],[s+t,hi,'var(--yellow)']]:st===4?[[t,hi]]:[];const {s:svg,px}=plot(f,0,hi,{shade,ymax:lam*1.1});let o=svg;
-   const mark=(x,lab)=>line(px(x),40,px(x),Y0,'miss','stroke-dasharray="4 4"')+text(px(x),34,lab,'text-anchor="middle" font-size="12"');
-   if(st>=1&&st<4)o+=mark(s,`s = ${s}`);if(st>=2&&st<4)o+=mark(s+t,`s + t = ${s+t}`);if(st===4)o+=mark(t,`t = ${t}`);return o;},
+   const mark=(x,lab,y=34)=>line(px(x),y+6,px(x),Y0,'miss','stroke-dasharray="4 4"')+text(px(x),y,lab,'text-anchor="middle" font-size="12"');
+   if(st>=1&&st<4)o+=mark(s,`s = ${s}`);if(st>=2&&st<4)o+=mark(s+t,`s + t = ${s+t}`,58);if(st===4)o+=mark(t,`t = ${t}`);return o;},
   metrics(l){const lam=+l.params.lam,s=+l.params.s,t=+l.params.t,st=l.step,m=[];if(st>=1)m.push(['P(X > s)',F(Math.exp(-lam*s),4)]);if(st>=2)m.push(['P(X > s + t)',F(Math.exp(-lam*(s+t)),4)]);if(st>=3)m.push(['Conditional',F(Math.exp(-lam*t),4)]);if(st>=4)m.push(['P(X > t)',F(Math.exp(-lam*t),4)]);return m;},
   theory(){const M=t=>`<span class="math">${t}</span>`;return `<strong>Why:</strong> ${M('P(X>s+t\\mid X>s)=\\frac{e^{-\\lambda(s+t)}}{e^{-\\lambda s}}=e^{-\\lambda t}=P(X>t)')}.`;}};
 })();

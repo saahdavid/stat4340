@@ -34,6 +34,7 @@ try{
  const routes=['index.html',...Array.from({length:8},(_,i)=>`module-${i+1}.html`),'practice.html','exams.html','review.html','search.html','glossary.html','notebook.html','labs.html','tables.html'];
  for(const route of routes){await page.goto(`${base}/${route}`,{waitUntil:'networkidle'});await page.waitForFunction(()=>!!window.Course);await page.waitForFunction(()=>window.katex!==undefined);await page.evaluate(()=>Course.renderMath());assert.equal(await page.locator('.math-error').count(),0,route);assert.equal(await rawTeX(),false,route+' raw TeX');assert.equal(await page.locator('.math:not([data-rendered])').count(),0,route);assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,route+' overflow');}
  for(let m=1;m<=8;m++){await page.goto(`${base}/module-${m}.html`,{waitUntil:'networkidle'});
+  assert.equal(await page.locator('.lab').count(),await page.locator('[data-lab]').count(),`module ${m}: every lab mounts`);
   if(BUILT.includes(m))assert.equal(await page.locator('[data-practice]').count(),1,`module ${m} practice`);else{assert.match(await page.locator('.page-intro .eyebrow').innerText(),/Coming soon/i);assert.equal(await page.locator('[data-practice]').count(),0);}}
  assert.equal(await page.locator('.site-feedback').count(),0,'feedback box hidden until the form link is set');
  console.log(`PASS: ${routes.length} pages load with typeset math; modules ${BUILT.join(', ')} built, the rest show "coming soon".`);
@@ -173,7 +174,7 @@ try{
  console.log('PASS: sidebar toggle and My notebook (bookmarks, saved questions, exam history).');
 
  // Labs wait for the student: nothing moves until Next step or Play all; Back and Start over work; points respond to keys.
- {await page.goto(`${base}/labs.html`,{waitUntil:'networkidle'});const labs=await page.locator('.lab').count();assert.ok(labs>=BUILT.length);
+ {await page.goto(`${base}/labs.html`,{waitUntil:'networkidle'});const labs=await page.locator('.lab').count();assert.equal(labs,await page.locator('[data-lab]').count(),'every lab on the labs page mounts');assert.ok(labs>=BUILT.length);
   for(let i=0;i<labs;i++){const lab=page.locator('.lab').nth(i),L=`Course.labInstances[${i}]`;
    assert.equal(await lab.locator('[data-do=next]').count(),1,'step lab');assert.equal(await lab.locator('[data-do=one],[data-do=play],[data-do=thousand]').count(),0,'no self-running controls');
    const n=await page.evaluate(i=>Course.labInstances[i].steps().length,i);assert.ok(n>=3);

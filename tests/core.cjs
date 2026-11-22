@@ -4,6 +4,8 @@ const vm=require('node:vm');
 const S=require('../assets/js/stats.js');
 const ctx=vm.createContext({Stats:S,Math});
 const load=f=>vm.runInContext(fs.readFileSync(`assets/js/${f}.js`,'utf8'),ctx,{filename:f});
+// Every script in the site must compile (a syntax error would silently drop a page feature).
+{const walk=d=>fs.readdirSync(d,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(`${d}/${e.name}`):e.name.endsWith('.js')?[`${d}/${e.name}`]:[]);for(const f of walk('assets/js'))new vm.Script(fs.readFileSync(f,'utf8'),{filename:f});}
 // Built modules come from Course.built in questions/shared.js
 load('questions/shared');const BUILT=ctx.Course.built;for(const m of BUILT)load(`questions/module-${m}`);
 load('rrplot');for(const f of ['stats','kit',...BUILT.map(m=>`m${m}`),'merge'])load(`hand/${f}`);

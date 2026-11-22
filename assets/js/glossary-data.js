@@ -74,6 +74,18 @@ root.GLOSSARY=[
 ['Gamma distribution',4,'gamma','X ~ G(α, β) with shape α and scale β; E(X) = αβ and Var(X) = αβ².'],
 ['Exponential distribution',4,'exponential','X ~ Exp(λ): f(x) = λe^(−λx) for x ≥ 0, F(x) = 1 − e^(−λx), E(X) = 1/λ, Var(X) = 1/λ².'],
 ['Memoryless property',4,'exponential','For X ~ Exp(λ), P(X > s + t | X > s) = P(X > t): the remaining wait does not depend on how long you have waited.'],
-['Chi-squared distribution',4,'chisq','χ²(ν), the gamma distribution with α = ν/2 and β = 2; E(X) = ν and Var(X) = 2ν. ν is the degrees of freedom.']
+['Chi-squared distribution',4,'chisq','χ²(ν), the gamma distribution with α = ν/2 and β = 2; E(X) = ν and Var(X) = 2ν. ν is the degrees of freedom.'],
+['Joint PMF',5,'joint-pmf','p(x, y) = P(X = x, Y = y) for two discrete random variables; the cells are nonnegative and add to 1.'],
+['Marginal distribution',5,'marginal-pmf','The distribution of one variable alone: add the joint PMF over the other variable (or integrate a joint PDF).'],
+['Joint PDF',5,'joint-pdf','f(x, y) ≥ 0 with total volume 1; P((X, Y) ∈ A) is the double integral of f over A.'],
+['Independent random variables',5,'independence','X and Y with p(x, y) = p_X(x)p_Y(y) (or f(x, y) = f_X(x)f_Y(y)) for every pair.'],
+['Covariance',5,'covariance','Cov(X, Y) = E[(X − μ_X)(Y − μ_Y)] = E(XY) − μ_Xμ_Y. Var(X ± Y) = Var(X) + Var(Y) ± 2Cov(X, Y).'],
+['Correlation coefficient',5,'covariance','ρ = Cov(X, Y)/(σ_Xσ_Y), between −1 and 1. Independent ⇒ uncorrelated, but not the reverse.'],
+['Random sample (i.i.d.)',5,'statistics','X₁, …, Xₙ independent and identically distributed.'],
+['Sampling distribution',5,'statistics','The distribution of a statistic over all possible samples of the same size from the same population.'],
+['Random sampling error',5,'statistics','The difference between a statistic and the parameter it estimates, caused by random sampling.'],
+['Law of Large Numbers',5,'sample-mean','As n increases, the sample mean x̄ gets closer to the population mean μ.'],
+['Standard deviation of x̄',5,'sample-mean','σ_x̄ = σ/√n: sample means vary less than individual values, and less as n grows.'],
+['Central Limit Theorem',5,'clt','For a large random sample, x̄ ≈ N(μ, σ²/n) whatever the population shape. Course rule: n > 40. For a normal population x̄ is exactly normal.']
 ];
 })(typeof window!=='undefined'?window:globalThis);
