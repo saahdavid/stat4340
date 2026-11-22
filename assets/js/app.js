@@ -89,3 +89,21 @@
  if(!storage.write('stat4340-storage-check',true)){document.querySelectorAll('.save-note').forEach(el=>el.textContent='Browser storage is unavailable. This session works, but mastery will not persist.');}
  Course.renderMath();window.addEventListener('load',()=>Course.renderMath());
 })();
+
+/* Code checks (R and Python): one statement per line. "a; b; c" becomes three lines, each keeping its semicolon,
+   so students can read and copy them. Splits only at a ';' outside quotes and brackets. */
+(function(){
+ function split(s){const out=[];let cur='',q=null,d=0;
+  for(let i=0;i<s.length;i++){const c=s[i];cur+=c;
+   if(q){if(c===q)q=null;continue;}
+   if(c==='"'||c==="'"){q=c;continue;}
+   if('([{'.includes(c))d++;else if(')]}'.includes(c))d=Math.max(0,d-1);
+   else if(c===';'&&d===0){out.push(cur);cur='';while(/\s/.test(s[i+1]||''))i++;}}
+  if(cur.trim())out.push(cur);return out;}
+ function fmt(root){(root.querySelectorAll?root.querySelectorAll('.check code,.methods code'):[]).forEach(el=>{if(el.dataset.lines)return;el.dataset.lines='1';
+   const t=el.textContent,py=(el.closest('.check')?.querySelector('strong')?.textContent==='Python')||!!el.closest('details')?.querySelector('.tag-xl');let lines=split(t);if(py)lines=lines.map(l=>l.replace(/;\s*$/,''));if(lines.length>1)el.textContent=lines.join('\n');});}
+ Course.formatCode=fmt;
+ const run=()=>fmt(document.body);
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run();
+ new MutationObserver(ms=>{for(const m of ms)for(const n of m.addedNodes)if(n.nodeType===1)fmt(n);}).observe(document.documentElement,{childList:true,subtree:true});
+})();

@@ -40,7 +40,9 @@ Each built module has notes (objectives, explanations, highlighted formulas, wor
 
 ## Design
 
-The site has its own look, separate from STAT 2331: an **engineering computation pad**. Pages sit on green engineering paper with a faint grid; the header is a drawing title block with the 4340 mark; formulas sit in double-ruled "boxed answer" frames; the home page opens with a Given / Find / Solution / Answer worked problem; module cards read "Sheet N of 8". Type is Barlow and Barlow Semi Condensed with JetBrains Mono for numbers; colors are drafting green, ink blue, and an amber highlighter, with a dark mode. The styles are at the end of `assets/css/style.css`.
+SMU colors: **Campanile Blue #354CA1**, **Mustang Red #CC0035**, and white. A blue header band with a red stripe; Bitter headings and Source Sans 3 text; JetBrains Mono for code. Formulas sit in a blue box with a red bar on the left. **Correct answers are blue; wrong answers are red.** Dark mode uses lighter tints of the same two colors. The theme is the "SMU theme" block at the end of `assets/css/style.css` (colors are CSS variables at the top of that block).
+
+**Code checks:** each R or Python statement is on its own line (`Course.formatCode` in `assets/js/app.js` splits `a; b; c` at semicolons outside quotes and brackets; Python lines drop the trailing semicolon). Text wraps between words, never in the middle of one.
 
 **Printing:** formulas are built from short math pieces that wrap to the page instead of scrolling sideways, and any piece still too wide is scaled to fit (never below 75%). The browser test fails if any formula is hidden on a phone or in print.
 

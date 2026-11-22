@@ -113,6 +113,14 @@ try{
   const left=await page.evaluate(()=>{const RX=/p̂|x̄|ŷ|[μσ√≤≥₀₁ₐ²]/;const out=[];const w=document.createTreeWalker(document.querySelector('main'),NodeFilter.SHOW_TEXT);let n;while(n=w.nextNode()){const el=n.parentElement;if(el.closest('.katex,svg,code,kbd,.screen,.xl,.check,[data-lab],button,select,.rr-anim,.eyebrow'))continue;if(RX.test(n.nodeValue))out.push(n.nodeValue.trim().slice(0,60));}return out;});
   assert.deepEqual(left,[],`module ${m} has untypeset math`);assert.equal(await page.locator('.math-error').count(),0);}
  console.log('PASS: inline math typeset in the built module notes.');
+ // Code checks: one statement per line (no "a; b" on a single line), and code boxes never break inside a word.
+ for(const m of BUILT){await page.goto(`${base}/module-${m}.html`,{waitUntil:'networkidle'});
+  const bad=await page.evaluate(()=>[...document.querySelectorAll('.check code')].filter(c=>/; +\S/.test(c.textContent.replace(/(["'])(?:(?!\1).)*\1/g,''))).map(c=>c.textContent.slice(0,60)));
+  assert.deepEqual(bad,[],`module ${m}: statements share a line`);
+  const wrap=await page.evaluate(()=>{const c=document.querySelector('.check code');return c?getComputedStyle(c).overflowWrap+'|'+getComputedStyle(c).wordBreak:'none';});
+  assert.ok(/^(break-word|normal)\|normal$/.test(wrap)||wrap==='none',`module ${m}: code wraps mid-word (${wrap})`);}
+ console.log('PASS: R and Python checks show one statement per line and wrap between words.');
+
 
  // Progress ring and progress links between browsers.
  {const ctxA=await browser.newContext({permissions:['clipboard-read','clipboard-write']}),pA=await ctxA.newPage();await pA.goto(`${base}/index.html`,{waitUntil:'load'});
