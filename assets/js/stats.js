@@ -28,15 +28,27 @@
   const round=(x,n=4)=>Number(x.toFixed(n));
   const tableNormal=z=>z < -3.49?0:z>3.49?1:round(normalCDF(round(z,2)),4);
   function tableInverse(p){if(!(p>0&&p<1))return NaN;let best=Infinity,zs=[];for(let i=-349;i<=349;i++){const d=Math.abs(tableNormal(i/100)-p);if(d<best-1e-10){best=d;zs=[i/100];}else if(Math.abs(d-best)<1e-10)zs.push(i/100);}return round(zs.reduce((a,b)=>a+b,0)/zs.length,3);}
-  const dfs=[...Array.from({length:30},(_,i)=>i+1),40,50,60,80,100,1000];
-  const tails=[.25,.20,.15,.10,.05,.025,.02,.01,.005,.0025,.001,.0005];
-  const tableDF=df=>df>=1?dfs.filter(d=>d<=df).pop():NaN;
-  const tCritical=(df,confidence=.95)=>round(tInv((1+confidence)/2,tableDF(df)),3);
+  // STAT 4340 t table: exact df = n − 1 for every row 1–40 (t procedures are used only when n ≤ 40),
+  // plus the z row (∞) for large samples. Upper-tail areas as in engineering texts.
+  const dfs=Array.from({length:40},(_,i)=>i+1);
+  const tails=[.10,.05,.025,.01,.005,.001,.0005];
+  const tableDF=df=>df>=1?(df<=40?Math.floor(df):Infinity):NaN;
+  const tq=(p,row)=>row===Infinity?normalInv(p):tInv(p,row);
+  const tCritical=(df,confidence=.95)=>round(tq((1+confidence)/2,tableDF(df)),3);
+  // Chi-squared: regularized lower incomplete gamma P(a, x), CDF, inverse, and the table.
+  function gammaP(a,x){if(x<=0)return 0;const gl=logGamma(a);if(x<a+1){let sum=1/a,del=sum,ap=a;for(let i=0;i<500;i++){ap++;del*=x/ap;sum+=del;if(Math.abs(del)<Math.abs(sum)*1e-15)break;}return sum*Math.exp(-x+a*Math.log(x)-gl);}
+   let b=x+1-a,c=1/1e-300,d=1/b,h=d;for(let i=1;i<500;i++){const an=-i*(i-a);b+=2;d=an*d+b;if(Math.abs(d)<1e-300)d=1e-300;c=b+an/c;if(Math.abs(c)<1e-300)c=1e-300;d=1/d;const del=d*c;h*=del;if(Math.abs(del-1)<1e-15)break;}return 1-Math.exp(-x+a*Math.log(x)-gl)*h;}
+  const chiCDF=(x,df)=>gammaP(df/2,x/2);
+  function chiInv(p,df){if(!(p>0&&p<1))return NaN;let a=0,b=Math.max(10,df*4);while(chiCDF(b,df)<p)b*=2;for(let i=0;i<200;i++){const m=(a+b)/2;if(chiCDF(m,df)<p)a=m;else b=m;}return (a+b)/2;}
+  const chiDfs=[...Array.from({length:40},(_,i)=>i+1),50,60,70,80,90,100];
+  const chiTails=[.995,.99,.975,.95,.90,.10,.05,.025,.01,.005];
+  // chi-squared critical value with right-tail area alpha (course notation: chi^2_{alpha, df})
+  const chiCritical=(alpha,df)=>round(chiInv(1-alpha,df),3);
   function tBracket(t,df,twoSided=false){
     const row=tableDF(df),v=Math.abs(t),factor=twoSided?2:1;
     if(v===0)return {lower:.5*factor,upper:.5*factor,df:row};
     let lower=0,upper=.5;
-    for(const a of tails){const critical=round(tInv(1-a,row),3);if(Math.abs(v-critical)<1e-10)return {lower:a*factor,upper:a*factor,df:row};if(v>critical){upper=a;}else{lower=a;break;}}
+    for(const a of tails){const critical=round(tq(1-a,row),3);if(Math.abs(v-critical)<1e-10)return {lower:a*factor,upper:a*factor,df:row};if(v>critical){upper=a;}else{lower=a;break;}}
     return {lower:lower*factor,upper:upper*factor,df:row};
   }
   const mean=a=>a.reduce((s,v)=>s+v,0)/a.length;
@@ -54,6 +66,6 @@
     function expr(){let v=term();while(s[i]==='+'||s[i]==='-'){const op=s[i++],w=term();v=op==='+'?v+w:v-w;}return v;}
     const v=expr();if(i!==s.length||!Number.isFinite(v))throw Error('Enter a finite number using valid arithmetic.');return v;
   }
-  const api={clamp,logGamma,normalCDF,normalPDF,normalInv,tCDF,tInv,choose,binomPMF,binomCDF,round,tableNormal,tableInverse,dfs,tails,tableDF,tCritical,tBracket,mean,sd,median,summary,regression,parse,zStars:{80:1.282,90:1.645,95:1.960,99:2.576}};
+  const api={clamp,logGamma,normalCDF,normalPDF,normalInv,tCDF,tInv,choose,binomPMF,binomCDF,round,tableNormal,tableInverse,dfs,tails,tableDF,tq,tCritical,tBracket,gammaP,chiCDF,chiInv,chiDfs,chiTails,chiCritical,mean,sd,median,summary,regression,parse,zStars:{80:1.282,90:1.645,95:1.960,99:2.576}};
   root.Stats=api;if(typeof module!=='undefined')module.exports=api;
 })(globalThis);

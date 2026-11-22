@@ -130,16 +130,12 @@
   }
   const tcdf = (lo, hi, df) => pt(hi, df) - pt(lo, df);
 
-  // The t table used in class (upper-tail areas, Moore-style Table D).
-  const T_TAIL = [0.25, 0.20, 0.15, 0.10, 0.05, 0.025, 0.02, 0.01, 0.005, 0.0025, 0.001, 0.0005];
-  const T_DF = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,40,50,60,80,100,1000];
+  // STAT 4340 t table: upper-tail areas; exact df = n - 1 for rows 1-40 (t is used only when n <= 40).
+  const T_TAIL = [0.10, 0.05, 0.025, 0.01, 0.005, 0.001, 0.0005];
+  const T_DF = Array.from({ length: 40 }, (_, i) => i + 1);
   const tTableValue = (df, tail) => Math.round(qt(1 - tail, df) * 1000) / 1000;
-  // Row of the table to use for a given df: exact if present, otherwise the next smaller df (conservative).
-  function tTableRow(df) {
-    let row = T_DF[0];
-    for (const d of T_DF) if (d <= df) row = d;
-    return row;
-  }
+  // Row of the table for a given df: the exact df (the course uses df = n - 1 with n <= 40).
+  function tTableRow(df) { return Math.max(1, Math.min(40, Math.floor(df))); }
 
   // ---------- Binomial ----------
   function choose(n, k) {

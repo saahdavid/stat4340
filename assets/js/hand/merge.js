@@ -16,7 +16,8 @@
     3: { 'm3-pmf': ['m3-pmfcdf'], 'm3-mean': ['m3-ex'], 'm3-function': ['m3-eh'], 'm3-variance': ['m3-var'], 'm3-binomial': ['m3-bin'], 'm3-hyper': ['m3-hyp'], 'm3-negbin': ['m3-nb'], 'm3-poisson': ['m3-pois'] },
     4: { 'm4-pdf': ['m4-pdfprob'], 'm4-percentile': ['m4-pct'], 'm4-moments': ['m4-mom'], 'm4-uniform': ['m4-unif'], 'm4-normal': ['m4-norm'], 'm4-inverse': ['m4-inv'], 'm4-exponential': ['m4-exp'], 'm4-gamma': ['m4-gam'] },
     5: { 'm5-joint': ['m5-jointp'], 'm5-marginal': ['m5-marg'], 'm5-independent': ['m5-ind'], 'm5-expect': ['m5-exy'], 'm5-cov': ['m5-covcorr'], 'm5-xbar': ['m5-se'], 'm5-clt': ['m5-cltprob'], 'm5-paramstat': ['m5-ps'] },
-    6: { 'm6-identify': ['m6-ident'], 'm6-estimates': ['m6-four'], 'm6-bias': ['m6-bias'], 'm6-compare': ['m6-cmp'], 'm6-se': ['m6-stderr'], 'm6-mom': ['m6-mom'], 'm6-mle': ['m6-mle'], 'm6-invariance': ['m6-inv'] }
+    6: { 'm6-identify': ['m6-ident'], 'm6-estimates': ['m6-four'], 'm6-bias': ['m6-bias'], 'm6-compare': ['m6-cmp'], 'm6-se': ['m6-stderr'], 'm6-mom': ['m6-mom'], 'm6-mle': ['m6-mle'], 'm6-invariance': ['m6-inv'] },
+    7: { 'm7-z': ['m7-zsig'], 'm7-large': ['m7-large'], 'm7-wald': ['m7-waldp'], 'm7-wilson': ['m7-wilsonp'], 'm7-bounds': ['m7-bound'], 'm7-t': ['m7-tint'], 'm7-chi': ['m7-chi'], 'm7-interpret': ['m7-meaning'] }
   };
 
   // \( … \) and \[ … \] → the .math spans that Course.renderMath typesets

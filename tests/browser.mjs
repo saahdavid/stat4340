@@ -191,6 +191,10 @@ try{
   if(BUILT.includes(1)){const lab=page.locator('[data-lab=resistance]');await lab.locator('[data-do=next]').click();
    await lab.locator('[data-point="6"]').focus();const old=await page.evaluate(()=>Course.labInstances[0].data.values[6]);await page.keyboard.press('ArrowRight');assert.equal(await page.evaluate(()=>Course.labInstances[0].data.values[6]),Math.round((old+.1)*10)/10);}}
  await page.goto(`${base}/tables.html`,{waitUntil:'networkidle'});await page.locator('#normal-mode').selectOption('area');assert.ok((await page.locator('#normal-result').innerText()).includes('1.645'));assert.equal(await page.locator('#normal-table .highlight').count(),2);
+ if(BUILT.includes(7)){await page.locator('#t-df').fill('9');await page.locator('#t-mode').selectOption('confidence');await page.locator('#t-value').fill('95');await page.locator('#t-lookup').click();assert.match(await page.locator('#t-result').innerText(),/Row df = 9\..*2\.262/,'t row df = 9 gives 2.262');
+  assert.equal(await page.locator('#t-table-grid tbody tr').count(),41,'t table rows 1–40 and the z row');
+  await page.locator('#t-mode').selectOption('test');await page.locator('#t-df').fill('7');await page.locator('#t-tail').selectOption('left');await page.locator('#t-value').fill('0.05');await page.locator('#t-lookup').click();assert.match(await page.locator('#t-result').innerText(),/1\.895\. Reject H₀ if TS ≤ −1\.895/);
+  await page.locator('#chi-df').fill('39');await page.locator('#chi-conf').fill('95');await page.locator('#chi-lookup').click();const chi=await page.locator('#chi-result').innerText();assert.ok(chi.includes('58.120')&&chi.includes('23.654'),'chi-squared df 39');assert.equal(await page.locator('#chi-table-grid .highlight').count(),2);}
  console.log('PASS: step labs (Next step, Back, Play all, Pause, Start over; nothing advances alone), keyboard points, normal-table lookup.');
 
  // Formulas never hide behind a horizontal scroll: every piece fits its box on a phone and when printed.

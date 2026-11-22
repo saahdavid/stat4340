@@ -97,6 +97,17 @@ root.GLOSSARY=[
 ['Method of moments',6,'moments','Estimate m parameters by setting the first m sample moments equal to the population moments and solving.'],
 ['Likelihood function',6,'mle','L(θ) = f(x₁, …, xₙ; θ), the joint PMF or PDF of the observed data viewed as a function of θ.'],
 ['Maximum likelihood estimator (MLE)',6,'mle','The value θ̂ that maximizes L(θ): the parameter value that makes the observed data most plausible.'],
-['Invariance property',6,'invariance','If θ̂ is the MLE of θ, then h(θ̂) is the MLE of h(θ).']
+['Invariance property',6,'invariance','If θ̂ is the MLE of θ, then h(θ̂) is the MLE of h(θ).'],
+['Interval estimate',7,'why','A range of values believed to contain the parameter: point estimate ± margin of error.'],
+['Margin of error',7,'why','(Critical value) × (standard error): the half-width of a confidence interval.'],
+['Confidence level',7,'interpret','100(1 − α)%: the long-run proportion of intervals, built the same way, that contain the parameter.'],
+['Critical value z(α/2)',7,'z-interval','The z value with area α/2 to its right: 1.645 (90%), 1.96 (95%), 2.576 (99%).'],
+['Large-sample interval for μ',7,'large-sample','x̄ ± z(α/2)·s/√n, used when n > 40 (course rule).'],
+['Wald interval',7,'proportion','p̂ ± z(α/2)√(p̂(1 − p̂)/n), the course default for p; needs np̂ ≥ 10 and n(1 − p̂) ≥ 10.'],
+['Score (Wilson) interval',7,'wilson','An interval for p centered at p̃ = (p̂ + z²/2n)/(1 + z²/n); better coverage than Wald for small n and stays in [0, 1].'],
+['Confidence bound',7,'bounds','A one-sided interval: μ < x̄ + z(α)s/√n (upper) or μ > x̄ − z(α)s/√n (lower).'],
+['t distribution',7,'t-interval','tν: symmetric, bell-shaped, centered at 0, with heavier tails than N(0, 1); approaches N(0, 1) as ν grows. (X̄ − μ)/(S/√n) ~ t(n − 1) for a normal sample.'],
+['t interval',7,'t-interval','x̄ ± t(α/2, n − 1)·s/√n, for n ≤ 40 from a normal population with σ unknown; df = n − 1 exactly.'],
+['Interval for σ²',7,'variance','((n − 1)s²/χ²(α/2, n − 1), (n − 1)s²/χ²(1 − α/2, n − 1)) for a normal population; square-root the endpoints for σ.']
 ];
 })(typeof window!=='undefined'?window:globalThis);
