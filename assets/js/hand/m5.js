@@ -138,7 +138,7 @@
   function xbar() {
     const [what, u, mr, sr] = R.pick(POPS), mu = R.int(...mr), sd = R.int(...sr), nn = R.pick([9, 16, 25, 36, 49, 64, 100]), giveVar = R.coin(0.4), k = R.pick([4, 9]);
     return {
-      prompt: `<p>The ${what} have mean ${mu} ${u} and ${giveVar ? `variance ${sd * sd} ${u}²` : `standard deviation ${sd} ${u}`}. A random sample of ${nn} is taken.</p>`,
+      prompt: `<p>The ${what} have mean ${mu} ${u} and ${giveVar ? `variance ${sd * sd} ${u}<sup>2</sup>` : `standard deviation ${sd} ${u}`}. A random sample of ${nn} is taken.</p>`,
       parts: [
         Num(T`\(E(\bar X)\)`, mu, [], 2),
         Num(T`\(\sigma_{\bar X}\)`, sd / Math.sqrt(nn), [{ value: sd * sd / Math.sqrt(nn), msg: "Use σ, the square root of the variance, in σ/√n." }, { value: sd / nn, msg: "Divide by √n, not n." }, { value: sd, msg: "That is the SD of one value. Sample means vary less: σ/√n." }]),

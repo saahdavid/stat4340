@@ -86,6 +86,17 @@ root.GLOSSARY=[
 ['Random sampling error',5,'statistics','The difference between a statistic and the parameter it estimates, caused by random sampling.'],
 ['Law of Large Numbers',5,'sample-mean','As n increases, the sample mean x̄ gets closer to the population mean μ.'],
 ['Standard deviation of x̄',5,'sample-mean','σ_x̄ = σ/√n: sample means vary less than individual values, and less as n grows.'],
-['Central Limit Theorem',5,'clt','For a large random sample, x̄ ≈ N(μ, σ²/n) whatever the population shape. Course rule: n > 40. For a normal population x̄ is exactly normal.']
+['Central Limit Theorem',5,'clt','For a large random sample, x̄ ≈ N(μ, σ²/n) whatever the population shape. Course rule: n > 40. For a normal population x̄ is exactly normal.'],
+['Point estimator',6,'estimators','A statistic θ̂ used to estimate a parameter θ; it is a random variable.'],
+['Point estimate',6,'estimators','The single number an estimator gives for one observed sample.'],
+['Unbiased estimator',6,'unbiased','An estimator with E(θ̂) = θ for every value of θ; its sampling distribution is centered at θ.'],
+['Bias',6,'unbiased','Bias(θ̂) = E(θ̂) − θ.'],
+['Minimum variance unbiased estimator (MVUE)',6,'mvue','Among all unbiased estimators of θ, the one with the smallest variance. For a normal sample, X̄ is the MVUE of μ.'],
+['Standard error',6,'standard-error','The standard deviation of an estimator, √Var(θ̂); it measures precision. SE(X̄) = σ/√n and SE(p̂) = √(p(1 − p)/n).'],
+['Moments',6,'moments','The kth population moment is E(Xᵏ); the kth sample moment is (1/n)ΣXᵢᵏ.'],
+['Method of moments',6,'moments','Estimate m parameters by setting the first m sample moments equal to the population moments and solving.'],
+['Likelihood function',6,'mle','L(θ) = f(x₁, …, xₙ; θ), the joint PMF or PDF of the observed data viewed as a function of θ.'],
+['Maximum likelihood estimator (MLE)',6,'mle','The value θ̂ that maximizes L(θ): the parameter value that makes the observed data most plausible.'],
+['Invariance property',6,'invariance','If θ̂ is the MLE of θ, then h(θ̂) is the MLE of h(θ).']
 ];
 })(typeof window!=='undefined'?window:globalThis);
