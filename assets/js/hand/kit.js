@@ -86,7 +86,7 @@
   };
 
   // ---------- normal probability helper (Modules 5, 6, 8) ----------
-  // Builds the by-hand table steps, the exact value, a picture, and TI/Excel lines.
+  // Builds the by-hand table steps, the exact value, a picture, and the R/Python checks (ti/excel slots).
   // o = { mu, sd, type: "lt"|"gt"|"bt"|"out", a, b, v: "X" (TeX name), sdTex: "\\sigma" }
   const tx = (x, d = 4) => S.num(x, d).replace("−", "-");
   function normalProb(o) {
@@ -130,11 +130,11 @@
       mistakes = [{ value: tB - tA, msg: "That is the area between. 'Outside' adds the two tails, which is 1 minus the area between." }];
       xlF = `=NORM.DIST(${tx(a)},${tx(mu)},${tx(sd)},TRUE)+1-NORM.DIST(${tx(b)},${tx(mu)},${tx(sd)},TRUE)`;
     }
-    const tiLine = type === "out"
-      ? HandUI.screen(`normalcdf(-E99,${tx(a)},${tx(mu)},${tx(sd)})+normalcdf(${tx(b)},E99,${tx(mu)},${tx(sd)})`)
-      : HandUI.screen(`normalcdf(${lo},${hi},${tx(mu)},${tx(sd)})`);
-    const ti = `${HandUI.keys("[2nd] [VARS] {2:normalcdf(}")}<br>${tiLine} = ${f(exact)}`;
-    const excel = HandUI.xl(xlF, f(exact));
+    const P = (x) => `pnorm(${tx(x)}, ${tx(mu)}, ${tx(sd)})`, Q = (x) => `norm.cdf(${tx(x)}, ${tx(mu)}, ${tx(sd)})`;
+    const rExpr = type === "lt" ? P(a) : type === "gt" ? `1 - ${P(a)}` : type === "bt" ? `${P(b)} - ${P(a)}` : `${P(a)} + 1 - ${P(b)}`;
+    const pyExpr = type === "lt" ? Q(a) : type === "gt" ? `1 - ${Q(a)}` : type === "bt" ? `${Q(b)} - ${Q(a)}` : `${Q(a)} + 1 - ${Q(b)}`;
+    const ti = `<code>${rExpr}</code> = ${f(exact)}`;
+    const excel = `<code>from scipy.stats import norm; ${pyExpr}</code> = ${f(exact)}`;
     const showSoft = Math.abs(tab - exact) >= 0.00005;
     const after = showSoft ? `Software gives ${f(exact)}. The small difference comes from rounding \\(z\\) to two decimals; both answers are accepted.` : "";
     const figure = HandUI.normalFig(mu, sd, shade.map(s => [Math.max(s[0], mu - 4 * sd), Math.min(s[1], mu + 4 * sd)]));
@@ -154,8 +154,8 @@
         `Search the inside of the table for the area closest to ${S.fmt(left, 4)}: ${tie ? `it sits halfway between two entries, so use \\(z = ${zT.toFixed(3)}\\)` : `${S.fmt(closest, 4)} gives \\(z = ${zT.toFixed(2)}\\)`}.`,
         `Unstandardize: \\(x = \\mu + z\\sigma = ${tx(mu)} + (${tx(zT, 3)})(${tx(sd)}) = ${S.fmt(xT, 4).replace("−", "-")}\\).`
       ],
-      ti: `${HandUI.keys("[2nd] [VARS] {3:invNorm(}")}<br>${HandUI.screen(`invNorm(${tx(left, 4)},${tx(mu)},${tx(sd)})`)} = ${S.fmt(xE, 4)}`,
-      excel: HandUI.xl(`=NORM.INV(${tx(left, 4)},${tx(mu)},${tx(sd)})`, S.fmt(xE, 4))
+      ti: `<code>qnorm(${tx(left, 4)}, ${tx(mu)}, ${tx(sd)})</code> = ${S.fmt(xE, 4)}`,
+      excel: `<code>from scipy.stats import norm; norm.ppf(${tx(left, 4)}, ${tx(mu)}, ${tx(sd)})</code> = ${S.fmt(xE, 4)}`
     };
   }
 

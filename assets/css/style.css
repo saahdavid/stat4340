@@ -300,3 +300,5 @@ button,.button,input,select{border-radius:3px}
 .notes{font-size:18px;line-height:1.68;max-width:780px}
 .toc:before{content:'On this page';font:600 14px var(--head);letter-spacing:0;color:var(--navy)}
 .toc:before{text-transform:none!important}
+.formula-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr))}
+.formula-grid>.formula,.sheet-sec,.notes .formula{min-width:0}

@@ -61,6 +61,19 @@ root.GLOSSARY=[
 ['Hypergeometric distribution',3,'hypergeometric','X ~ Hypergeo(n, M, N) counts successes in a sample of n drawn without replacement from N items with M successes.'],
 ['Finite population correction',3,'hypergeometric','(N − n)/(N − 1), the factor that reduces the variance when sampling without replacement.'],
 ['Negative binomial distribution',3,'negbin','X ~ NB(r, p) counts failures before the rth success in independent trials. E(X) = r(1 − p)/p.'],
-['Poisson distribution',3,'poisson','X ~ Poisson(μ) counts events in a fixed interval: p(x) = e^(−μ)μˣ/x!, with E(X) = Var(X) = μ. It approximates Bin(n, p) when n > 50 and np < 5.']
+['Poisson distribution',3,'poisson','X ~ Poisson(μ) counts events in a fixed interval: p(x) = e^(−μ)μˣ/x!, with E(X) = Var(X) = μ. It approximates Bin(n, p) when n > 50 and np < 5.'],
+['Probability density function (PDF)',4,'continuous','A function f(x) ≥ 0 with total area 1 such that P(a ≤ X ≤ b) is the area under f from a to b.'],
+['Support',4,'continuous','The set of values where the density is positive: the values X can take.'],
+['CDF of a continuous random variable',4,'cdf','F(x) = P(X ≤ x), the area under f to the left of x. F′(x) = f(x).'],
+['Uniform distribution',4,'uniform','X ~ U(A, B) has constant density 1/(B − A) on [A, B]; E(X) = (A + B)/2, Var(X) = (B − A)²/12.'],
+['Percentile of a continuous distribution',4,'percentiles','The (100p)th percentile η(p) solves F(η(p)) = p. The median solves F(μ̃) = 0.5.'],
+['Normal distribution',4,'normal','X ~ N(μ, σ²): the symmetric bell-shaped density with mean μ and variance σ².'],
+['Standard normal distribution',4,'normal','Z ~ N(0, 1), with CDF Φ(z). Any normal X is standardized by Z = (X − μ)/σ.'],
+['z-score',4,'normal','z = (x − μ)/σ, the number of standard deviations x lies above (positive) or below (negative) the mean. Round to two decimals for the table.'],
+['Gamma function',4,'gamma','Γ(α) = ∫₀^∞ x^(α−1)e^(−x) dx. Γ(α) = (α − 1)Γ(α − 1), Γ(n) = (n − 1)!, Γ(1/2) = √π.'],
+['Gamma distribution',4,'gamma','X ~ G(α, β) with shape α and scale β; E(X) = αβ and Var(X) = αβ².'],
+['Exponential distribution',4,'exponential','X ~ Exp(λ): f(x) = λe^(−λx) for x ≥ 0, F(x) = 1 − e^(−λx), E(X) = 1/λ, Var(X) = 1/λ².'],
+['Memoryless property',4,'exponential','For X ~ Exp(λ), P(X > s + t | X > s) = P(X > t): the remaining wait does not depend on how long you have waited.'],
+['Chi-squared distribution',4,'chisq','χ²(ν), the gamma distribution with α = ν/2 and β = 2; E(X) = ν and Var(X) = 2ν. ν is the degrees of freedom.']
 ];
 })(typeof window!=='undefined'?window:globalThis);
