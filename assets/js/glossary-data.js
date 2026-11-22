@@ -48,6 +48,19 @@ root.GLOSSARY=[
 ['Independent events',2,'independence','Events for which P(A | B) = P(A), equivalently P(A ∩ B) = P(A)P(B).'],
 ['Partition',2,'bayes','Mutually exclusive and exhaustive events A₁, …, Aₖ: exactly one of them occurs.'],
 ['Law of total probability',2,'bayes','P(B) = Σ P(B | Aᵢ)P(Aᵢ) over a partition A₁, …, Aₖ.'],
-["Bayes’ theorem",2,'bayes','P(Aⱼ | B) = P(B | Aⱼ)P(Aⱼ) / Σ P(B | Aᵢ)P(Aᵢ): it updates a prior probability to a posterior probability.']
+["Bayes’ theorem",2,'bayes','P(Aⱼ | B) = P(B | Aⱼ)P(Aⱼ) / Σ P(B | Aᵢ)P(Aᵢ): it updates a prior probability to a posterior probability.'],
+['Random variable',3,'random-variables','A rule (function) that assigns a real number to each outcome in the sample space.'],
+['Discrete random variable',3,'types','A random variable whose possible values form a finite set or a countably infinite list.'],
+['Continuous random variable',3,'types','A random variable whose possible values fill an entire interval of the real line.'],
+['Probability mass function (PMF)',3,'pmf','p(x) = P(X = x) for a discrete random variable; p(x) ≥ 0 and the values add to 1.'],
+['Bernoulli random variable',3,'pmf','A random variable that takes only the values 0 and 1, with P(X = 1) = p.'],
+['Cumulative distribution function (CDF)',3,'cdf','F(x) = P(X ≤ x). For a discrete random variable, P(a ≤ X ≤ b) = F(b) − F(a−).'],
+['Expected value',3,'expected','E(X) = Σ x p(x), the long-run average of many independent observations of X.'],
+['Variance of a random variable',3,'variance','Var(X) = Σ (x − μ)² p(x) = E(X²) − μ². Var(aX + b) = a²Var(X).'],
+['Binomial distribution',3,'binomial','X ~ Bin(n, p) counts successes in n independent trials with constant success probability p. E(X) = np, Var(X) = np(1 − p).'],
+['Hypergeometric distribution',3,'hypergeometric','X ~ Hypergeo(n, M, N) counts successes in a sample of n drawn without replacement from N items with M successes.'],
+['Finite population correction',3,'hypergeometric','(N − n)/(N − 1), the factor that reduces the variance when sampling without replacement.'],
+['Negative binomial distribution',3,'negbin','X ~ NB(r, p) counts failures before the rth success in independent trials. E(X) = r(1 − p)/p.'],
+['Poisson distribution',3,'poisson','X ~ Poisson(μ) counts events in a fixed interval: p(x) = e^(−μ)μˣ/x!, with E(X) = Var(X) = μ. It approximates Bin(n, p) when n > 50 and np < 5.']
 ];
 })(typeof window!=='undefined'?window:globalThis);
