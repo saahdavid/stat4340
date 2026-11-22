@@ -116,7 +116,7 @@
   }
 
   // ---- mean and median ----
-  const CENTER_CTX = [["sloth speeds (m/min)", 2.0, 6.0, 1], ["download times (seconds)", 12, 58, 0], ["daily defect counts", 0, 30, 0], ["battery lifetimes (hours)", 40, 95, 0]];
+  const CENTER_CTX = [["sloth speeds (meters per minute)", 2.0, 6.0, 1], ["download times (seconds)", 12, 58, 0], ["daily defect counts", 0, 30, 0], ["battery lifetimes (hours)", 40, 95, 0]];
   function center() {
     const [ctx, lo, hi, dec] = R.pick(CENTER_CTX);
     const size = R.int(7, 10);

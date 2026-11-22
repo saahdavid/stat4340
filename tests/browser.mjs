@@ -192,6 +192,13 @@ try{
  await page.goto(`${base}/tables.html`,{waitUntil:'networkidle'});await page.locator('#normal-mode').selectOption('area');assert.ok((await page.locator('#normal-result').innerText()).includes('1.645'));assert.equal(await page.locator('#normal-table .highlight').count(),2);
  console.log('PASS: step labs (Next step, Back, Play all, Pause, Start over; nothing advances alone), keyboard points, normal-table lookup.');
 
+ // Formulas never hide behind a horizontal scroll: every piece fits its box on a phone and when printed.
+ {const wide=async label=>page.evaluate(l=>[...document.querySelectorAll('.formula .math')].filter(m=>{if(!m.offsetParent)return false;const f=m.closest('.formula').getBoundingClientRect(),k=m.querySelector('.katex-html');if(!k)return false;const els=[...k.querySelectorAll('*')].filter(e=>!e.closest('.hide-tail,svg'));const r=els.reduce((a,e)=>Math.max(a,e.getBoundingClientRect().right),0),l=els.reduce((a,e)=>Math.min(a,e.getBoundingClientRect().left),1e9);return r>f.right+1||l<f.left-1;}).map(m=>l+': '+m.textContent.slice(0,50)),label);
+  const pages=[...BUILT.map(m=>`module-${m}.html`),'review.html','tables.html'],bad=[];
+  await page.setViewportSize({width:390,height:900});for(const r of pages){await page.goto(`${base}/${r}`,{waitUntil:'networkidle'});if(r==='review.html')await page.locator('#sheet-all').click();bad.push(...await wide(r+' phone'));}
+  await page.setViewportSize({width:816,height:1056});await page.emulateMedia({media:'print'});for(const r of pages){await page.goto(`${base}/${r}`,{waitUntil:'networkidle'});if(r==='review.html')await page.evaluate(()=>document.querySelectorAll('.sheet').forEach(s=>s.hidden=false));await page.evaluate(()=>Course.fitFormulas());bad.push(...await wide(r+' print'));}
+  await page.emulateMedia({media:'screen'});await page.setViewportSize({width:1440,height:1000});assert.deepEqual(bad,[],'formula pieces wider than their box');}
+ console.log('PASS: every formula fits its box on a phone and in print (no hidden overflow).');
  // Visual captures at both widths and themes.
  for(const width of [1440,390])for(const theme of ['light','dark']){
   await page.setViewportSize({width,height:1000});await page.evaluate(t=>localStorage.setItem('stat4340-theme',JSON.stringify(t)),theme);

@@ -15,7 +15,7 @@
   const IDENT = { SE: '\\text{SE}', SD: '\\text{SD}', IQR: '\\text{IQR}', df: '\\text{df}', TS: '\\text{TS}', sx: 's_x', sy: 's_y', Sx: 'S_x', np: 'np', Q1: 'Q_1', Q3: 'Q_3', ME: '\\text{ME}' };
   const FUNC = { Binomial: '\\text{Binomial}', Bin: '\\text{Bin}', Var: '\\text{Var}', SD: '\\text{SD}', SE: '\\text{SE}', N: 'N', P: 'P', C: 'C', E: 'E', B: 'B' };
   // single letters that read as variables on their own in prose
-  const LONE = new Set(['n', 'p', 'q', 'x', 'y', 's', 'r', 'z', 't', 'k', 'm', 'b', 'X', 'Y', 'Z', 'R', 'T']);
+  const LONE = new Set(['n', 'p', 'q', 'x', 'y', 's', 'r', 'z', 't', 'k', 'm', 'b', 'X', 'Y', 'Z', 'T']);  // R is the language in STAT 4340, not a variable
   const OPS = { '=': '=', '≈': '\\approx', '≠': '\\ne', '<': '<', '>': '>', '≤': '\\le', '≥': '\\ge', '+': '+', '−': '-', '-': '-', '×': '\\times', '·': '\\cdot', '⋅': '\\cdot', '/': '/', '^': '^', '√': '\\sqrt', '(': '(', ')': ')', '[': '[', ']': ']', '|': '|', '∼': '\\sim', '~': '\\sim', '±': '\\pm', '*': '^{*}', "'": "'", ':': ':', ',': ',', '%': '\\%', '!': '!', '…': '\\ldots' };
   const STRONG_OPS = new Set(['≈', '≠', '≤', '≥', '×', '√', '^', '∼', '±']);
   const REL = new Set(['=', '≈', '≠', '<', '>', '≤', '≥']);
