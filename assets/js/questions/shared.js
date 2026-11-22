@@ -3,7 +3,7 @@
  const S=root.Stats;
  const C=root.Course={titles:['Descriptive Statistics','Probability','Discrete Random Variables','Continuous Random Variables','Joint Distributions & the CLT','Point Estimation','Confidence Intervals','Hypothesis Testing'],
   // modules whose content is finished; keep in step with BUILT in scripts/build.mjs
-  built:[1,2,3,4,5,6,7],questions:{},labs:{}};
+  built:[1,2,3,4,5,6,7,8],questions:{},labs:{}};
  const int=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
  const pick=a=>a[int(0,a.length-1)];
  const f=(v,d=4)=>Number(v.toFixed(d)).toString();

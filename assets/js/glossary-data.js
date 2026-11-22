@@ -108,6 +108,19 @@ root.GLOSSARY=[
 ['Confidence bound',7,'bounds','A one-sided interval: μ < x̄ + z(α)s/√n (upper) or μ > x̄ − z(α)s/√n (lower).'],
 ['t distribution',7,'t-interval','tν: symmetric, bell-shaped, centered at 0, with heavier tails than N(0, 1); approaches N(0, 1) as ν grows. (X̄ − μ)/(S/√n) ~ t(n − 1) for a normal sample.'],
 ['t interval',7,'t-interval','x̄ ± t(α/2, n − 1)·s/√n, for n ≤ 40 from a normal population with σ unknown; df = n − 1 exactly.'],
-['Interval for σ²',7,'variance','((n − 1)s²/χ²(α/2, n − 1), (n − 1)s²/χ²(1 − α/2, n − 1)) for a normal population; square-root the endpoints for σ.']
+['Interval for σ²',7,'variance','((n − 1)s²/χ²(α/2, n − 1), (n − 1)s²/χ²(1 − α/2, n − 1)) for a normal population; square-root the endpoints for σ.'],
+['Statistical hypothesis',8,'hypotheses','A claim about an unknown population parameter, such as μ > 26 or p < 0.24.'],
+['Null hypothesis H₀',8,'hypotheses','The initial claim, assumed true unless the data give strong evidence against it; always contains “=”.'],
+['Alternative hypothesis Hₐ',8,'hypotheses','The competing claim the test looks for evidence of: μ < μ₀, μ > μ₀, or μ ≠ μ₀ (lower-, upper-, or two-tailed).'],
+['Test statistic',8,'steps','A value computed from the sample that measures how far the data are from what H₀ predicts, e.g. z = (x̄ − μ₀)/(σ/√n).'],
+['Rejection region',8,'steps','The set of test-statistic values for which H₀ is rejected, bounded by the critical value(s) z_α, z_α/2, or t_α,n−1.'],
+['p-value',8,'steps','Assuming H₀ is true, the probability of a test statistic at least as extreme as the one observed, in the direction of Hₐ. Reject H₀ if p-value < α.'],
+['Significance level α',8,'steps','The probability of rejecting H₀ when H₀ is true, chosen before the test.'],
+['Type I error',8,'errors','Rejecting H₀ when H₀ is true; probability α.'],
+['Type II error',8,'errors','Failing to reject H₀ when H₀ is false; probability β. With n fixed, decreasing α increases β.'],
+['Power',8,'errors','1 − β: the probability the test rejects H₀ when a particular alternative is true.'],
+['z test for μ',8,'z-test','Z = (X̄ − μ₀)/(σ/√n) for a normal population with σ known; large-sample version uses S when n > 40.'],
+['t test for μ',8,'t-test','T = (X̄ − μ₀)/(S/√n) ~ t(n − 1) for a normal population with σ unknown; df = n − 1 exactly.'],
+['z test for p',8,'p-test','Z = (p̂ − p₀)/√(p₀(1 − p₀)/n), valid when np₀ ≥ 10 and n(1 − p₀) ≥ 10.']
 ];
 })(typeof window!=='undefined'?window:globalThis);

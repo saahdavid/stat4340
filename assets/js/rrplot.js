@@ -31,10 +31,10 @@
   function pValue(o) {
     if (o.dist !== 't') { const zr = Math.round(o.ts * 100) / 100, left = Math.round((1 - upper(zr, 'z')) * 1e4) / 1e4; return Number((o.dir === 'gt' ? 1 - left : o.dir === 'lt' ? left : 2 * Math.min(left, 1 - left)).toFixed(4)); }
     const u = upper(o.ts, o.dist, o.df); return o.dir === 'gt' ? u : o.dir === 'lt' ? 1 - u : Math.min(1, 2 * Math.min(u, 1 - u)); }
-  const TAILS = [0.25, 0.20, 0.15, 0.10, 0.05, 0.025, 0.02, 0.01, 0.005, 0.0025, 0.001, 0.0005];
+  const TAILS = [0.10, 0.05, 0.025, 0.01, 0.005, 0.001, 0.0005];  // STAT 4340 t table (upper-tail areas)
   const TT = {};
   function tTableValue(df, a) { const k = df + '|' + a; if (TT[k] != null) return TT[k]; if (root.Stats && root.Stats.tInv) return (TT[k] = Math.round(root.Stats.tInv(1 - a, df) * 1000) / 1000); let lo = 0, hi = 700; for (let i = 0; i < 80; i++) { const m = (lo + hi) / 2; if (upper(m, 't', df) > a) lo = m; else hi = m; } return (TT[k] = Math.round((lo + hi) / 2 * 1000) / 1000); }
-  function bracket(o) {  // table bracket for a t p-value: lower < p < upper (row = next smaller listed df)
+  function bracket(o) {  // table bracket for a t p-value: lower < p < upper (row = df, exact; df = n − 1 ≤ 40)
     const row = tableRow(o.df), two = o.dir === 'ne', v = o.dir === 'ne' ? Math.abs(o.ts) : o.dir === 'gt' ? o.ts : -o.ts, f = two ? 2 : 1;
     if (v <= 0) return { lo: 0.5 * f, hi: 1, row };
     let lo = 0, hi = 0.5;
@@ -45,7 +45,7 @@
   const fix3 = v => minus(v.toFixed(3));
   const tsText = v => minus(Number(v.toFixed(Math.abs(v) >= 10 ? 3 : 4)).toString());
   const sub = n => String(n).split('').map(ch => '₀₁₂₃₄₅₆₇₈₉'[ch] || ch).join('');
-  const ROWS = [...Array.from({ length: 30 }, (_, i) => i + 1), 40, 50, 60, 80, 100, 1000];
+  const ROWS = Array.from({ length: 40 }, (_, i) => i + 1);  // exact df rows 1–40 (STAT 4340)
   const tableRow = df => ROWS.filter(r => r <= df).pop();
   const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
@@ -116,7 +116,7 @@
       for (const c of cs) {
         const y0 = TOP - 18, y1 = y0 + (BASE - y0) * s.crit, near = o.ts != null && s.ts > 0 && Math.abs(X(o.ts) - X(c)) < 64, right = near ? X(o.ts) < X(c) : c > 0;
         out += `<line class="rrp-crit" x1="${X(c).toFixed(1)}" y1="${y0}" x2="${X(c).toFixed(1)}" y2="${y1.toFixed(1)}"/>`;
-        if (s.crit > 0.7) out += `<text class="rrp-critlabel" x="${(X(c) + (right ? 6 : -6)).toFixed(1)}" y="${y0 + 12}" text-anchor="${right ? 'start' : 'end'}">${c < 0 ? '−' : ''}${o.dist === 't' ? 't*' : 'z*'} = ${fix3(c)}</text>`;
+        if (s.crit > 0.7) out += `<text class="rrp-critlabel" x="${(X(c) + (right ? 6 : -6)).toFixed(1)}" y="${y0 + 12}" text-anchor="${right ? 'start' : 'end'}">${c < 0 ? '−' : ''}critical ${o.dist === 't' ? 't' : 'z'} = ${fix3(c)}</text>`;
       }
     }
     // test statistic slides from 0
@@ -201,8 +201,8 @@
   function steps(o) {
     if (o.mode === 'pv' && o.ts != null) return stepsPV(o);
     const tableCol = o.dir === 'ne' ? `column α/2${o.alpha ? ' = ' + Number((Number(o.alpha) / 2).toFixed(4)) : ''}` : `column α${o.alpha ? ' = ' + o.alpha : ''}`;
-    const row = o.dist === 't' ? `row df = ${tableRow(o.df)}${tableRow(o.df) !== o.df ? ` (df = ${o.df} is not listed, so the next smaller row)` : ''}` : 'z* row';
-    const sym = o.dist === 't' ? 't*' : 'z*';
+    const row = o.dist === 't' ? `row df = ${tableRow(o.df)}` : 'z row (∞)';
+    const sym = o.dist === 't' ? 'critical t' : 'critical z';
     const rule = o.dir === 'gt' ? `TS ≥ ${fix3(o.crit)}` : o.dir === 'lt' ? `TS ≤ ${fix3(-o.crit)}` : `|TS| ≥ ${fix3(o.crit)}`;
     const list = [
       `Assume H₀ is true. Then the test statistic follows ${o.dist === 't' ? 'the t distribution with df = ' + o.df : 'the standard normal Z'}.`,
@@ -221,7 +221,7 @@
     const formula = o.dir === 'gt' ? `P(${T} ≥ ${ts})` : o.dir === 'lt' ? `P(${T} ≤ ${ts})` : `2P(${T} ≥ ${a})`;
     let how;
     if (o.dist === 'z') { const r2 = minus((Math.round(o.ts * 100) / 100).toFixed(2)), a2 = (Math.round(Math.abs(o.ts) * 100) / 100).toFixed(2); how = Math.abs(o.ts) > 3.49 ? `|TS| is beyond the normal table (±3.49), so the tail area is essentially 0.` : `From the normal table (z rounded to ${o.dir === 'ne' ? a2 : r2}): ${o.dir === 'gt' ? `1 − (left area at ${r2})` : o.dir === 'lt' ? `the left area at ${r2}` : `2 × (1 − left area at ${a2})`}.`; }
-    else { const b = bracket(o); how = `The t-table (row df = ${b.row}) only brackets it: ${b.lo === 0 ? `p-value < ${b.hi}` : b.hi >= 1 && b.lo >= 0.5 ? `p-value > ${b.lo}` : `${b.lo} < p-value < ${b.hi}`}. tcdf on the TI or T.DIST in Excel gives the exact value.`; }
+    else { const b = bracket(o); how = `The t-table (row df = ${b.row}) only brackets it: ${b.lo === 0 ? `p-value < ${b.hi}` : b.hi >= 1 && b.lo >= 0.5 ? `p-value > ${b.lo}` : `${b.lo} < p-value < ${b.hi}`}. pt in R or scipy.stats.t.cdf in Python gives the exact value.`; }
     return [
       `Assume H₀ is true. Then the test statistic follows ${o.dist === 't' ? 'the t distribution with df = ' + o.df : 'the standard normal Z'}.`,
       `Compute the test statistic: TS = ${ts}.`,
