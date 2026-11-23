@@ -36,7 +36,7 @@ try{
  for(let m=1;m<=8;m++){await page.goto(`${base}/module-${m}.html`,{waitUntil:'networkidle'});
   assert.equal(await page.locator('.lab').count(),await page.locator('[data-lab]').count(),`module ${m}: every lab mounts`);
   if(BUILT.includes(m))assert.equal(await page.locator('[data-practice]').count(),1,`module ${m} practice`);else{assert.match(await page.locator('.page-intro .eyebrow').innerText(),/Coming soon/i);assert.equal(await page.locator('[data-practice]').count(),0);}}
- assert.equal(await page.locator('.site-feedback').count(),0,'feedback box hidden until the form link is set');
+ assert.equal(await page.locator('.site-feedback').count(),1,'feedback box shown now that the form link is set');
  console.log(`PASS: ${routes.length} pages load with typeset math; modules ${BUILT.join(', ')} built, the rest show "coming soon".`);
 
  // Stress every generator inside the real browser too.
@@ -120,6 +120,13 @@ try{
   const wrap=await page.evaluate(()=>{const c=document.querySelector('.check code');return c?getComputedStyle(c).overflowWrap+'|'+getComputedStyle(c).wordBreak:'none';});
   assert.ok(/^(break-word|normal)\|normal$/.test(wrap)||wrap==='none',`module ${m}: code wraps mid-word (${wrap})`);}
  console.log('PASS: R and Python checks show one statement per line and wrap between words.');
+ // Feedback box points at the STAT 4340 form (never the STAT 2331 one) on every built page.
+ for(const m of BUILT){await page.goto(`${base}/module-${m}.html`,{waitUntil:'networkidle'});
+  const href=await page.locator('.site-feedback .fb-link').getAttribute('href');
+  assert.ok(href.startsWith('https://docs.google.com/forms/d/e/1FAIpQLSd_ZYwEzUMwEjJjCpiOjE7O5eQox48jDyIkxuw5eliYZnlHaQ/viewform'),`module ${m}: wrong feedback form ${href}`);}
+ assert.equal(await page.evaluate(()=>/1FAIpQLSeSijk/.test(document.documentElement.outerHTML)),false);
+ console.log('PASS: feedback box links to the STAT 4340 form.');
+
 
 
  // Progress ring and progress links between browsers.

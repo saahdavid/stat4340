@@ -88,7 +88,7 @@
       const sec = sectionOf(range.commonAncestorContainer), short = text.length > 400 ? text.slice(0, 400) + '…' : text;
       current = { text: short, sec };
       pop.innerHTML = `<button type="button" data-pop="bm">${ICON} Bookmark</button><a class="button" data-pop="ask" target="_blank" rel="noopener">Ask Dr. Saah</a>`;
-      pop.querySelector('[data-pop=ask]').href = C.askLink ? C.askLink(`Question about Module ${m}${sec.title ? ', “' + sec.title + '”' : ''}: “${short}”\n\nMy question: `) : 'https://forms.gle/xXUwjtoXM23b3AfY7';
+      { const ask = pop.querySelector('[data-pop=ask]'); ask.hidden = !C.askLink; if (C.askLink) ask.href = C.askLink(`Question about Module ${m}${sec.title ? ', “' + sec.title + '”' : ''}: “${short}”\n\nMy question: `); }
       const r = range.getBoundingClientRect(); pop.hidden = false;
       const w = pop.offsetWidth, x = Math.min(Math.max(8, r.left + r.width / 2 - w / 2), innerWidth - w - 8), y = r.top > 64 ? r.top - pop.offsetHeight - 8 : r.bottom + 8;
       pop.style.left = (x + scrollX) + 'px'; pop.style.top = (y + scrollY) + 'px';
@@ -154,7 +154,7 @@
     const list = fBm ? all.filter(s => String(s.module || 0) === fBm) : all;
     box.innerHTML = filterSel('bookmarks', all) + byModule(list).map(([m, items]) => `<section class="nb-module"><h2>${modName(m)}</h2>${items.map(b => `<article class="nb-card nb-bm" data-id="${b.id}"><header class="nb-card-head"><div><a href="${E(b.url)}"><strong>${E(b.section || 'Section')}</strong></a><span class="small muted"> · ${when(b.at)}</span></div></header>${b.text ? `<blockquote>${E(b.text)}</blockquote>` : '<p class="small muted">Whole section bookmarked.</p>'}
       <label class="small nb-note-l">My note<textarea rows="2" data-bnote="${b.id}" placeholder="Add a note">${E(b.note)}</textarea></label>
-      <div class="nb-card-actions"><a href="${E(b.url)}">Go to this passage</a><a href="${E(C.askLink ? C.askLink(`Question about Module ${m}${b.section ? ', “' + b.section + '”' : ''}${b.text ? ': “' + b.text + '”' : ''}\n\nMy question: `) : '#')}" target="_blank" rel="noopener">Ask Dr. Saah</a><button type="button" class="linkish danger-link" data-bremove="${b.id}">Remove</button></div></article>`).join('')}</section>`).join('');
+      <div class="nb-card-actions"><a href="${E(b.url)}">Go to this passage</a>${C.askLink ? `<a href="${E(C.askLink(`Question about Module ${m}${b.section ? ', “' + b.section + '”' : ''}${b.text ? ': “' + b.text + '”' : ''}\n\nMy question: `))}" target="_blank" rel="noopener">Ask Dr. Saah</a>` : ''}<button type="button" class="linkish danger-link" data-bremove="${b.id}">Remove</button></div></article>`).join('')}</section>`).join('');
   }
   function drawExams() {
     const box = page.querySelector('[data-panel=exams] .nb-body');

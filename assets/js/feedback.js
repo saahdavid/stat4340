@@ -1,14 +1,14 @@
 /* "Send feedback" box at the bottom of every page. It shows (and can copy) a short reference
    to where the student is: the page, plus the practice skill or the exam question when relevant.
-   To have the form fill this in automatically, set ENTRY to the number from the form's
-   pre-filled link (…&entry.123456789=…) — e.g. ENTRY = '123456789'. */
+   The form address and the optional entry number are set once, in scripts/build.mjs (FEEDBACK, FEEDBACK_ENTRY);
+   they reach this script as data-form / data-entry on the box. */
 (function () {
   'use strict';
-  const FORM = 'https://docs.google.com/forms/d/e/1FAIpQLSeSijkXuPol5U9dj9uTeYE-F4o7LXZ5-W-gqro3rDJ1IYRf9g/viewform';
-  const ENTRY = '1531774866';
-  if (window.Course) window.Course.askLink = text => `${FORM}?usp=pp_url&entry.${ENTRY}=${encodeURIComponent(text)}`;
   const box = document.querySelector('.site-feedback');
-  if (!box) return;
+  if (!box) return;   // no form set in scripts/build.mjs: no box, and no "Ask Dr. Saah" links
+  const FORM = box.dataset.form || '', ENTRY = box.dataset.entry || '';
+  const prefill = text => ENTRY ? `${FORM}?usp=pp_url&entry.${ENTRY}=${encodeURIComponent(text)}` : FORM;
+  if (FORM && window.Course) window.Course.askLink = prefill;
   const refEl = box.querySelector('.fb-ref'), link = box.querySelector('.fb-link'), copy = box.querySelector('.fb-copy');
   function where() {
     const C = window.Course || {};
@@ -22,7 +22,7 @@
   function update() {
     const ref = where();
     refEl.textContent = ref;
-    link.href = ENTRY ? `${FORM}?usp=pp_url&entry.${ENTRY}=${encodeURIComponent(ref)}` : 'https://forms.gle/xXUwjtoXM23b3AfY7';
+    link.href = prefill(ref);
   }
   update();
   ['pointerenter', 'focusin'].forEach(ev => box.addEventListener(ev, update));
