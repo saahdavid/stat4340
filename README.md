@@ -107,6 +107,6 @@ In this repository: **Settings → Pages → Deploy from a branch → `main`, fo
 
 The form address is `FEEDBACK` in `scripts/build.mjs` (the published `…/forms/d/e/<id>/viewform` address, not the editor's `/prefill` page). Every page then shows a "Help improve this site" box, and the notebook's "Ask Dr. Saah" buttons use the same form. An empty `FEEDBACK` hides both.
 
-**To have the form open with the page reference filled in:** in the form editor, open the three-dot menu → Get pre-filled link, type any text into the question that should receive the reference, click Get link, and copy the number after `entry.` in the address. Put it in `FEEDBACK_ENTRY` in `scripts/build.mjs` and rebuild. Until then, the box shows the reference with a Copy button for students to paste into the form.
+**To change the pre-filled question:** in the form editor, open the three-dot menu → Get pre-filled link, type any text into the question that should receive the reference, click Get link, and copy the number after `entry.` in the address. Put it in `FEEDBACK_ENTRY` in `scripts/build.mjs` and rebuild. It is set (entry.1611708265), so the form opens with the page reference filled in. With `FEEDBACK_ENTRY` empty, the box shows the reference with a Copy button instead.
 
 Only KaTeX and Google Fonts load from external CDNs. The site sends no analytics and no student data anywhere.

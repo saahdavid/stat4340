@@ -123,7 +123,7 @@ try{
  // Feedback box points at the STAT 4340 form (never the STAT 2331 one) on every built page.
  for(const m of BUILT){await page.goto(`${base}/module-${m}.html`,{waitUntil:'networkidle'});
   const href=await page.locator('.site-feedback .fb-link').getAttribute('href');
-  assert.ok(href.startsWith('https://docs.google.com/forms/d/e/1FAIpQLSd_ZYwEzUMwEjJjCpiOjE7O5eQox48jDyIkxuw5eliYZnlHaQ/viewform'),`module ${m}: wrong feedback form ${href}`);}
+  assert.ok(href.startsWith('https://docs.google.com/forms/d/e/1FAIpQLSd_ZYwEzUMwEjJjCpiOjE7O5eQox48jDyIkxuw5eliYZnlHaQ/viewform?usp=pp_url&entry.1611708265='),`module ${m}: wrong feedback form ${href}`);}
  assert.equal(await page.evaluate(()=>/1FAIpQLSeSijk/.test(document.documentElement.outerHTML)),false);
  console.log('PASS: feedback box links to the STAT 4340 form.');
 

@@ -16,7 +16,7 @@ const outline=[[],['Sample spaces and events','Set operations and Venn diagrams'
 /* Feedback form: the published …/forms/d/e/<id>/viewform address. FEEDBACK_ENTRY is the number from a pre-filled link (…&entry.NNNN=text);
    with it, the form opens with the page reference filled in; without it, students copy the reference. Empty FEEDBACK hides the box. */
 const FEEDBACK='https://docs.google.com/forms/d/e/1FAIpQLSd_ZYwEzUMwEjJjCpiOjE7O5eQox48jDyIkxuw5eliYZnlHaQ/viewform';
-const FEEDBACK_ENTRY='';
+const FEEDBACK_ENTRY='1611708265';
 const scripts=['stats.js','mathify.js','rrplot.js','questions/shared.js',...BUILT.map(m=>`questions/module-${m}.js`),'hand/stats.js','hand/kit.js',...BUILT.map(m=>`hand/m${m}.js`),'hand/merge.js','app.js','practice.js','exams/bank.js',...BUILT.map(m=>`exams/m${m}.js`),'exams.js','glossary-data.js','search-index.js','mistakes.js','review.js','notebook.js','feedback.js','labs/engine.js',...BUILT.map(m=>`labs/module-${m}.js`),'tables.js','search.js'];
 const has=(s,...pre)=>pre.some(x=>s===x||s.startsWith(x));
 function scriptsFor(title,active,module){
